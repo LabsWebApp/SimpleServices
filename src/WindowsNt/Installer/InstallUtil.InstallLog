@@ -106,3 +106,66 @@ System.ComponentModel.Win32Exception: Указанная служба была �
 Этап фиксации выполнен успешно.
 
 Групповая операция установки выполнена.
+
+Выполняется групповая операция установки.
+
+Начинается этап установки процедуры установки.
+См. файл журнала выполнения операция для сборки C:\Users\vovikdoc\source\repos\Services\src\WindowsNt\DiskDWatcherService\bin\Release\DiskDWatcherService.exe.
+Данный файл находится в C:\Users\vovikdoc\source\repos\Services\src\WindowsNt\DiskDWatcherService\bin\Release\DiskDWatcherService.InstallLog.
+
+Этап установки успешно выполнен, начинается этап фиксации.
+См. файл журнала выполнения операция для сборки C:\Users\vovikdoc\source\repos\Services\src\WindowsNt\DiskDWatcherService\bin\Release\DiskDWatcherService.exe.
+Данный файл находится в C:\Users\vovikdoc\source\repos\Services\src\WindowsNt\DiskDWatcherService\bin\Release\DiskDWatcherService.InstallLog.
+
+Этап фиксации выполнен успешно.
+
+Групповая операция установки выполнена.
+
+
+Начинается установка.
+См. файл журнала выполнения операция для сборки C:\Users\vovikdoc\source\repos\Services\src\WindowsNt\DiskDWatcherService\bin\Release\DiskDWatcherService.exe.
+Данный файл находится в C:\Users\vovikdoc\source\repos\Services\src\WindowsNt\DiskDWatcherService\bin\Release\DiskDWatcherService.InstallLog.
+
+Удаление из системы выполнено.
+
+Выполняется групповая операция установки.
+
+Начинается этап установки процедуры установки.
+См. файл журнала выполнения операция для сборки C:\Users\vovikdoc\source\repos\Services\src\WindowsNt\DiskDWatcherService\bin\Release\DiskDWatcherService.exe.
+Данный файл находится в C:\Users\vovikdoc\source\repos\Services\src\WindowsNt\DiskDWatcherService\bin\Release\DiskDWatcherService.InstallLog.
+
+На этапе установки возникло исключение.
+System.InvalidOperationException: Невозможно открыть диспетчер управления службами на компьютере '.'. Возможно, для этой операции требуются другие полномочия.
+Возникло внутреннее исключение System.ComponentModel.Win32Exception со следующим сообщением об ошибке: Отказано в доступе.
+
+Начинается этап отката процедуры установки.
+См. файл журнала выполнения операция для сборки C:\Users\vovikdoc\source\repos\Services\src\WindowsNt\DiskDWatcherService\bin\Release\DiskDWatcherService.exe.
+Данный файл находится в C:\Users\vovikdoc\source\repos\Services\src\WindowsNt\DiskDWatcherService\bin\Release\DiskDWatcherService.InstallLog.
+
+Этап отката выполнен успешно.
+
+Групповая операция установки выполнена.
+
+
+Начинается установка.
+См. файл журнала выполнения операция для сборки C:\Users\vovikdoc\source\repos\Services\src\WindowsNt\DiskDWatcherService\bin\Release\DiskDWatcherService.exe.
+Данный файл находится в C:\Users\vovikdoc\source\repos\Services\src\WindowsNt\DiskDWatcherService\bin\Release\DiskDWatcherService.InstallLog.
+
+Удаление из системы выполнено.
+
+Выполняется групповая операция установки.
+
+Начинается этап установки процедуры установки.
+См. файл журнала выполнения операция для сборки C:\Users\vovikdoc\source\repos\Services\src\WindowsNt\DiskDWatcherService\bin\Release\DiskDWatcherService.exe.
+Данный файл находится в C:\Users\vovikdoc\source\repos\Services\src\WindowsNt\DiskDWatcherService\bin\Release\DiskDWatcherService.InstallLog.
+
+На этапе установки возникло исключение.
+System.Security.SecurityException: Источник не найден, но не удалось выполнить поиск по нескольким или всем журналам событий.  Недоступные журналы: Security.
+
+Начинается этап отката процедуры установки.
+См. файл журнала выполнения операция для сборки C:\Users\vovikdoc\source\repos\Services\src\WindowsNt\DiskDWatcherService\bin\Release\DiskDWatcherService.exe.
+Данный файл находится в C:\Users\vovikdoc\source\repos\Services\src\WindowsNt\DiskDWatcherService\bin\Release\DiskDWatcherService.InstallLog.
+
+Этап отката выполнен успешно.
+
+Групповая операция установки выполнена.

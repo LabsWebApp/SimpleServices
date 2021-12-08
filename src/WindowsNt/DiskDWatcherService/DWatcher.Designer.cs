@@ -1,6 +1,6 @@
 ﻿namespace DiskDWatcherService
 {
-    partial class DiskDWatcher
+    partial class DWatcher
     {
         /// <summary> 
         /// Обязательная переменная конструктора.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            this.ServiceName = "DiskDWatcher";
+            this.ServiceName = "dwatcher";
         }
 
         #endregion

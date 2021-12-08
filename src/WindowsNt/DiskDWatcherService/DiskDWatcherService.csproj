@@ -45,11 +45,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DiskDWatcher.cs">
+    <Compile Include="DWatcher.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="DiskDWatcher.Designer.cs">
-      <DependentUpon>DiskDWatcher.cs</DependentUpon>
+    <Compile Include="DWatcher.Designer.cs">
+      <DependentUpon>DWatcher.cs</DependentUpon>
     </Compile>
     <Compile Include="Installer.cs">
       <SubType>Component</SubType>

@@ -9,18 +9,17 @@ namespace DiskDWatcherService
     {
         public ProjectInstaller()
         {
-            var processInstaller = new ServiceProcessInstaller();
-
-            processInstaller.Account = ServiceAccount.LocalSystem;
-
-            var serviceInstaller = new ServiceInstaller();
-            serviceInstaller.ServiceName = "DiskDWatcher";
-            serviceInstaller.DisplayName = "_____ DISK D WATCHER SERVICE _____";
-            serviceInstaller.Description = "Служба слежения за папками и файлами на диске D:";
-            serviceInstaller.StartType = ServiceStartMode.Automatic;
-
-            Installers.Add(processInstaller);
-            Installers.Add(serviceInstaller);
+            Installers.Add(new ServiceProcessInstaller
+            {
+                Account = ServiceAccount.LocalSystem
+            });
+            Installers.Add(new ServiceInstaller
+            {
+                ServiceName = "dwatcher",
+                DisplayName = "____Служба слежением за диском D:____",
+                Description = "Служба отслеживает и протоколирует изменения в файловой системе диска D:",
+                StartType = ServiceStartMode.Automatic
+            });
         }
     }
 }
