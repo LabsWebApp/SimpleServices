@@ -6,7 +6,8 @@ namespace DiskDWatcherService
 {
     public partial class DWatcher : ServiceBase
     {
-        public const string LogFile = @"C:\history.log";
+        public const string LogFile = @"C:\history.log",
+            Disk = @"D:\";
 
         private readonly StreamWriter _writer;
         private readonly FileSystemWatcher _watcher;
@@ -19,9 +20,12 @@ namespace DiskDWatcherService
         public DWatcher()
         {
             InitializeComponent();
+
+            if (!Directory.Exists(Disk)) return;
+
             var file = new FileInfo(LogFile);
-            _writer = file.CreateText();
-            _watcher = new FileSystemWatcher(@"D:\")
+            _writer = file.AppendText();
+            _watcher = new FileSystemWatcher(Disk)
             {
                 NotifyFilter = NotifyFilters.DirectoryName
                                | NotifyFilters.FileName
@@ -36,8 +40,6 @@ namespace DiskDWatcherService
             _watcher.Created += Watcher_Created;
             _watcher.Deleted += Watcher_Deleted;
             _watcher.Changed += Watcher_Changed;
-            //_watcher.Renamed += Watcher_Changed;
-            //_watcher.Error += Watcher_Changed;
             _watcher.Error += Watcher_Error;
             _watcher.Renamed += Watcher_Renamed;
         }
@@ -49,10 +51,10 @@ namespace DiskDWatcherService
         }
 
         private void Watcher_Renamed(object sender, RenamedEventArgs e) =>
-            WriteText($"[{DateTime.Now.ToLongTimeString()}] Файл(директория) - \"{e.FullPath}\" был(а) переименован(а) [старое имя: {e.OldName}], тип изменения: {e.ChangeType}");
+            WriteText($"[{DateTime.Now.ToLongTimeString()}] Файл(директория) - \"{e.FullPath}\" был(а) переименован(а) [старое имя: \"{e.OldName}\"]");
 
         private void Watcher_Error(object sender, ErrorEventArgs e) =>
-            WriteText($"[{DateTime.Now.ToLongTimeString()}] На диске D: произошла ошибка: {e.GetException().Message}");
+            WriteText($"[{DateTime.Now.ToLongTimeString()}] На диске {Disk} произошла ошибка: {e.GetException().Message}");
         private void Watcher_Changed(object sender, FileSystemEventArgs e)
         {
             if (e.FullPath.ToUpper().StartsWith(@"D:\$RECYCLE.BIN\")) return;
@@ -70,7 +72,7 @@ namespace DiskDWatcherService
         {
             _watcher.EnableRaisingEvents = true;
             var time = DateTime.Now;
-            WriteText($"*****Служба слежением за диском D: начала работу {time.ToShortDateString()} в {time.ToLongTimeString()}*****");
+            WriteText($"*****Служба слежением за диском {Disk} начала работу {time.ToShortDateString()} в {time.ToLongTimeString()}*****");
         }
 
 
@@ -78,7 +80,7 @@ namespace DiskDWatcherService
         {
             _watcher.EnableRaisingEvents = false;
             var time = DateTime.Now;
-            WriteText($"*****Служба слежением за диском D: закончила работу {time.ToShortDateString()} в {time.ToLongTimeString()}*****");
+            WriteText($"*****Служба слежением за диском {Disk} закончила работу {time.ToShortDateString()} в {time.ToLongTimeString()}*****");
             WriteText();
         }
 
