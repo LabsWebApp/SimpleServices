@@ -20,11 +20,16 @@ namespace DiskDWatcherService
         public DWatcher()
         {
             InitializeComponent();
-
-            if (!Directory.Exists(Disk)) return;
-
             var file = new FileInfo(LogFile);
             _writer = file.AppendText();
+
+            if (!Directory.Exists(Disk))
+            {
+                WriteText($"*****Служба слежением за диском {Disk} не может начать работать, так {Disk} отсутствует или скрыт в файловой системе*****");
+                _writer.Dispose();
+                return;
+            }
+
             _watcher = new FileSystemWatcher(Disk)
             {
                 NotifyFilter = NotifyFilters.DirectoryName

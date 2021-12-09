@@ -1,31 +1,37 @@
-﻿using System.ServiceProcess;
+﻿using Topshelf;
 
 namespace DiskDWatcherServiceCore;
 
-public class DWatcher : ServiceBase
+public class DWatcher : ServiceControl
 {
-    public const string LogFile = @"C:\history.log",
-        Disk = @"D:\";
+    public const string LogFile = @"C:\history.log", Disk = @"D:\";
 
-    private readonly object _locker = new();
-    private readonly StreamWriter? _writer;
+    private readonly StreamWriter _writer;
     private readonly FileSystemWatcher? _watcher;
 
-    private async Task WriteTextAsync(string text = "") => await Task.Run(() =>
+    private async Task WriteTextAsync(string text = "") => 
+        await Task.Run(() => WriteText(text));
+
+    private  void WriteText(string text = "") 
     {
-        lock (_locker)
+        lock (_writer)
         {
-            _writer?.WriteLine(text);
-            _writer?.FlushAsync();
+            _writer.WriteLine(text);
+            _writer.Flush();
         }
-    });
+    }
 
     public DWatcher()
     {
-        if (!Directory.Exists(Disk)) return;
-
         var file = new FileInfo(LogFile);
         _writer = file.AppendText();
+        if (!Directory.Exists(Disk))
+        {
+            WriteText($"*****Служба слежением за диском {Disk} не может начать работать, так {Disk} отсутствует или скрыт в файловой системе*****");
+            _writer.Dispose();
+            return;
+        }
+
         _watcher = new FileSystemWatcher(Disk)
         {
             NotifyFilter = NotifyFilters.DirectoryName
@@ -37,7 +43,6 @@ public class DWatcher : ServiceBase
             Filter = "*",
             IncludeSubdirectories = true
         };
-
         _watcher.Created += Watcher_Created;
         _watcher.Deleted += Watcher_Deleted;
         _watcher.Changed += Watcher_Changed;
@@ -69,25 +74,21 @@ public class DWatcher : ServiceBase
         await WriteTextAsync($"[{DateTime.Now.ToLongTimeString()}] Файл(директория) - \"{e.FullPath}\" был(а) создан(а)");
     }
 
-    protected override async void OnStart(string[] args)
+    public bool Start(HostControl? _)
     {
-        _watcher!.EnableRaisingEvents = true;
+        if (_watcher is null) return false;
+        _watcher.EnableRaisingEvents = true;
         var time = DateTime.Now;
-        await WriteTextAsync($"*****Служба слежением за диском {Disk} начала работу {time.ToShortDateString()} в {time.ToLongTimeString()}*****");
+        WriteText($"*****Служба слежением за диском {Disk} начала работу {time.ToShortDateString()} в {time.ToLongTimeString()}*****");
+        return true;
     }
 
-
-    protected override async void OnStop()
+    public bool Stop(HostControl? _)
     {
-        _watcher!.EnableRaisingEvents = false;
+        if (_watcher is null) return false;
+        _watcher.EnableRaisingEvents = false;
         var time = DateTime.Now;
-        await WriteTextAsync($"*****Служба слежением за диском {Disk} закончила работу {time.ToShortDateString()} в {time.ToLongTimeString()}*****");
-        await WriteTextAsync();
+        WriteText($"*****Служба слежением за диском {Disk} закончила работу {time.ToShortDateString()} в {time.ToLongTimeString()}*****\n");
+        return true;
     }
-
-    protected override void OnShutdown() => OnStop();
-
-    protected override void OnPause() => OnStop();
-
-    protected override void OnContinue() => OnStart(new[]{string.Empty});
 }
